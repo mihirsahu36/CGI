@@ -2,6 +2,7 @@ Write a Program to read a digital image. Split and display image into 4 quadrant
 
 pip install opencv-python
 
+
 import cv2
 import matplotlib.pyplot as plt
 
