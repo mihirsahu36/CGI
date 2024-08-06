@@ -178,10 +178,6 @@ int main(int argc, char **argv)
     return 0;
 }
 
-
-
-// Develop a program to demonstrate basic geometric operations on the 3D object
-
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -261,6 +257,111 @@ int main(int argc, char **argv)
     glutDisplayFunc(display);
     myinit();
     glEnable(GL_DEPTH_TEST);
+    glutMainLoop();
+    return 0;
+}
+
+
+#include<GL/glut.h>
+#include<stdio.h>
+#include<math.h>
+
+void init(){
+  glClearColor(1,0,0);
+  glOrthod2D(50,0,50,0);
+}
+
+void drawtriangle()
+{
+    glBegin(GL_POLYGON);
+        glVertex2f(100, 100);
+        glVertex2f(200, 100);
+        glVertex2f(150, 150);
+    glEnd();
+}
+
+void translate(){
+  glPushMatrix();
+  glTranslated(100,0,0);
+  drawtriangle();
+  glPopMatrix();
+}
+
+void scale(){
+  glPushMatrix();
+  glScaled(2,0,0);
+  drawtriangle();
+  glPopMatrix();
+}
+
+void rotate(){
+  glPushMatrix();
+  glRotated(45,0,0);
+  drawtriangle();
+  glPopMatrix();
+}
+
+void pivot_scale(){
+  glPushMatrix();
+  glTranslated(100,0,0);
+  glScaled(2,0,0);
+  glTranslated(-100,0,0);
+  drawtriangle();
+  glPopMatrix();
+}
+
+void pivot_rotate(){
+  glPushMatrix();
+  glTranslated(100,0,0);
+  glRotated(45,0,0);
+  glTranslated(-100,0,0);
+  drawtriangle();
+  glPopMatrix();
+}
+
+void menu_rotate(int id)
+{
+    switch (id)
+    {
+    case 1:
+        translate();
+        break;
+    case 2:
+        rotate_triangle();
+        break;
+    case 3:
+        pivot_point_rotate();
+        break;
+    case 4:
+        scale_triangle();
+        break;
+    case 5:
+        pivot_point_scale();
+        break;
+    default:
+        exit(0);
+    }
+}
+
+int main(int argc, char **argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(500, 500);
+    glutCreateWindow("Transformation");
+    myinit();
+    glutDisplayFunc(display);
+    glutCreateMenu(menu_rotate);
+
+    glutAddMenuEntry("Translate", 1);
+    glutAddMenuEntry("Rotation About origin", 2);
+    glutAddMenuEntry("Rotation About Fixed Point", 3);
+    glutAddMenuEntry("Scale About origin", 4);
+    glutAddMenuEntry("Scale About Fixed Point", 5);
+    glutAddMenuEntry("EXIT", 6);
+
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
+
     glutMainLoop();
     return 0;
 }
